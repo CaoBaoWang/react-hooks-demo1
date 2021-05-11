@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDom from 'react-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+
+const root  = document.getElementById('root')
+
+
+let value ;
+
+const myUseState= (initialValue)=>{
+    value  =(value === undefined) ? initialValue : value
+    const setValue =(newValue)=>{
+        value = newValue
+        render()
+    }
+    return [value,setValue]
+}
+
+const render = ()=>{
+    ReactDom.render(<App/>, root)
+}
+
+const App =()=>{
+    const [n,setN] = myUseState(0)
+
+    const addN = ()=>{
+        setN(n+1)
+    }
+
+    return( <div>
+        {n}
+        <button onClick={addN}>+1</button>
+    </div>)
+}
+
+
+render()
