@@ -7,31 +7,42 @@ import ReactDom from 'react-dom'
 const root  = document.getElementById('root')
 
 
-let value ;
+let _state = []
+let index = 0
 
 const myUseState= (initialValue)=>{
-    value  =(value === undefined) ? initialValue : value
-    const setValue =(newValue)=>{
-        value = newValue
+    const currentIndex = index
+    _state[currentIndex] =(_state[currentIndex] === undefined) ? initialValue : _state[currentIndex]
+
+    const setState =(newValue)=>{
+        _state[currentIndex] = newValue
         render()
     }
-    return [value,setValue]
+    index ++
+    return [_state[currentIndex],setState]
 }
 
 const render = ()=>{
+    index =0
+
     ReactDom.render(<App/>, root)
 }
 
 const App =()=>{
     const [n,setN] = myUseState(0)
+    const [m,setM] = myUseState(0)
 
-    const addN = ()=>{
-        setN(n+1)
-    }
+    console.log(`_state=${_state}`)
+
+    const addN = ()=>setN(n+1)
+    const addM = ()=>setM(m+1)
+
 
     return( <div>
-        {n}
-        <button onClick={addN}>+1</button>
+        {n} <br/>
+        {m}
+        <button onClick={addN}>n+1</button>
+        <button onClick={addM}>m+1</button>
     </div>)
 }
 
